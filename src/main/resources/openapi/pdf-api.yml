@@ -1,0 +1,59 @@
+openapi: 3.0.4
+
+info:
+  title: Sample API
+  description: Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/) or HTML.
+  version: 0.1.9
+
+servers:
+  - url: http://api.example.com/v1
+    description: Optional server description, e.g. Main (production) server
+  - url: http://staging-api.example.com
+    description: Optional server description, e.g. Internal staging server for testing
+
+paths:
+  /pdf/invoice:
+    post:
+      summary: create pdf from invoice.
+      description: Optional extended description in CommonMark or HTML.
+      requestBody:
+        description: Optional description in *Markdown*
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Invoice"
+      responses:
+        "200": # status code
+          description: a byte array representing the pdf file
+          content:
+            application/pdf:
+              schema:
+                type: file
+components:
+  schemas:
+    Invoice:
+      properties:
+        invoiceNumber:
+          type: string
+        date:
+          type: string
+        customerName:
+          type: string
+        customerAddress:
+          type: string
+        invoiceItems:
+          type: array
+          items:
+            $ref: "#/components/schemas/InvoiceItem"
+    InvoiceItem:
+      type: object
+      properties:
+        description:
+          type: string
+        quantity:
+          type: integer
+        unitPrice:
+          type: number
+
+
