@@ -1,62 +1,32 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8"/>
-  <title>Invoice</title>
-  <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 40px;
-    }
-    .header {
-        text-align: center;
-        margin-bottom: 30px;
-    }
-    .invoice-details {
-        margin-bottom: 20px;
-    }
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
-    }
-    th, td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: left;
-    }
-    th {
-        background-color: #f2f2f2;
-    }
-    .total {
-        text-align: right;
-        font-weight: bold;
-    }
-  </style>
-</head>
-<body>
+{#include template}
+{#title}{data.translations['invoice.title'] ?: 'Invoice'}{/title}
+{#style}
+th {
+  background-color: blue;
+}
+{/style}
 <div class="header">
-  <h1>INVOICE</h1>
-  <h2>Invoice: {invoice.invoiceNumber}</h2>
+  <h1 style="color: blue">{data.translations.get('invoice.title').toUpperCase ?: 'INVOICE'}</h1>
+  <h2>{data.translations.get('invoice.title') ?: 'Invoice'}: {data.invoice.invoiceNumber}</h2>
 </div>
 
 <div class="invoice-details">
-  <p><strong>Date:</strong> {invoice.date}</p>
-  <p><strong>Customer:</strong> {invoice.customerName}</p>
-  <p><strong>Address:</strong> {invoice.customerAddress}</p>
+  <p><strong>{data.translations.get('date') ?: 'Date'}:</strong> {data.invoice.date}</p>
+  <p><strong>{str:capitalize(data.translations.get('name')) ?: 'Name'}:</strong> {data.invoice.customerName}</p>
+  <p><strong>{data.translations.get('address') ?: 'Address'}</strong> {data.invoice.customerAddress}</p>
 </div>
 
 <table>
   <thead>
   <tr>
-    <th>Item</th>
-    <th>Quantity</th>
-    <th>Unit Price</th>
-    <th>Amount</th>
+    <th>{data.translations.get('item') ?: 'Item'}</th>
+    <th>{data.translations.get('quantity') ?: 'Quantity'}</th>
+    <th>{data.translations.get('unitprice') ?: 'Unit price'}</th>
+    <th>{data.translations.get('amount') ?: 'Amount'}</th>
   </tr>
   </thead>
   <tbody>
-  {#for invoiceItem in invoice.invoiceItems}
+  {#for invoiceItem in data.invoice.invoiceItems}
     <tr>
       <td>{invoiceItem.description}</td>
       <td>{invoiceItem.quantity}</td>
@@ -71,8 +41,9 @@
   </tfoot>
 </table>
 
+{#include invoice_details}{/include}
+
 <div>
-  <p>Thank you for your business!</p>
+  <p>{data.translations.get('invoice.footer') ?: 'Thank you for your business!'}</p>
 </div>
-</body>
-</html>
+{/include}

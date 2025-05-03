@@ -22,6 +22,13 @@ public interface PdfGenerator<T> {
       ITextRenderer renderer = new ITextRenderer();
       renderer.setDocumentFromString(processedHtml);
       renderer.layout();
+
+      int pageNumber = renderer.getRootBox().getLayer().getPages().size();
+
+      if(pageNumber > 1) {
+        return handleMultiPage(pageNumber, data, renderer, outputStream);
+      }
+
       renderer.createPDF(outputStream);
 
       return outputStream.toByteArray();
@@ -29,4 +36,10 @@ public interface PdfGenerator<T> {
       throw new RuntimeException("Error generating PDF", e);
     }
   }
+
+  default byte[] handleMultiPage(int pageNumber, T data, ITextRenderer renderer, ByteArrayOutputStream outputStream) {
+    renderer.createPDF(outputStream);
+    return outputStream.toByteArray();
+  }
+
 }

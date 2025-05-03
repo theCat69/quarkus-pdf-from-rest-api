@@ -1,7 +1,9 @@
 package com.fvd.pdf.generator;
 
 import com.fvd.pdf.InvoiceTester;
+import com.fvd.pdf.data.InvoiceData;
 import com.fvd.pdf.modelsopenapi.beans.Invoice;
+import com.fvd.pdf.translations.TranslationCache;
 import io.quarkus.test.junit.QuarkusTest;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -18,6 +20,7 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 class InvoicePdfGeneratorTest extends InvoiceTester {
   final InvoicePdfGenerator invoicePdfGenerator;
+  final TranslationCache translationCache;
 
   @BeforeEach
   @SneakyThrows
@@ -40,7 +43,8 @@ class InvoicePdfGeneratorTest extends InvoiceTester {
       )
     );
     //when
-    byte[] pdfBytes = invoicePdfGenerator.generatePdf(invoice);
+    byte[] pdfBytes = invoicePdfGenerator.generatePdf(new InvoiceData(invoice,
+      translationCache.getTranslationMap().get("FR")));
     //then
     Files.write(Path.of("test", "pdf", "test.pdf"), pdfBytes);
   }

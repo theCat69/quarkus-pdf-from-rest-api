@@ -33,7 +33,7 @@ class PdfResourceImplTest extends InvoiceTester {
           )
         )
       )
-      .when().post("/pdf-invoice")
+      .when().post("/pdf/invoice")
       .then()
       .statusCode(200);
   }
