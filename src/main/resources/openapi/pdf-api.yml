@@ -47,7 +47,6 @@ components:
           items:
             $ref: "#/components/schemas/InvoiceItem"
     InvoiceItem:
-      type: object
       properties:
         description:
           type: string

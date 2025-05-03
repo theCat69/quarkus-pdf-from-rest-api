@@ -23,14 +23,13 @@ public interface PdfGenerator<T> {
       renderer.setDocumentFromString(processedHtml);
       renderer.layout();
 
+      // handle multipage case
       int pageNumber = renderer.getRootBox().getLayer().getPages().size();
-
       if(pageNumber > 1) {
         return handleMultiPage(pageNumber, data, renderer, outputStream);
       }
 
       renderer.createPDF(outputStream);
-
       return outputStream.toByteArray();
     } catch (Exception e) {
       throw new RuntimeException("Error generating PDF", e);
