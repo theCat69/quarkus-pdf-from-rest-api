@@ -12,7 +12,7 @@ servers:
     description: Optional server description, e.g. Internal staging server for testing
 
 paths:
-  /pdf/invoice:
+  /invoice/pdf:
     post:
       summary: create pdf from invoice.
       description: Optional extended description in CommonMark or HTML.

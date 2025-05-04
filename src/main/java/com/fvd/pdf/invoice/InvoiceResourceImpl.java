@@ -1,10 +1,10 @@
-package com.fvd.pdf.resources;
+package com.fvd.pdf.invoice;
 
-import com.fvd.pdf.data.InvoiceData;
-import com.fvd.pdf.generator.InvoicePdfGenerator;
-import com.fvd.pdf.modelsopenapi.PdfResource;
+import com.fvd.pdf.modelsopenapi.InvoiceResource;
 import com.fvd.pdf.modelsopenapi.beans.Invoice;
 import com.fvd.pdf.translations.TranslationCache;
+import io.quarkus.qute.CheckedTemplate;
+import io.quarkus.qute.TemplateInstance;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.core.Response;
@@ -12,15 +12,16 @@ import lombok.RequiredArgsConstructor;
 
 @ApplicationScoped
 @RequiredArgsConstructor
-public class PdfResourceImpl implements PdfResource {
+public class InvoiceResourceImpl implements InvoiceResource {
 
   private final TranslationCache translationCache;
   private final InvoicePdfGenerator invoicePdfGenerator;
 
   @Override
-  public Response createPdfFromInvoice(@NotNull Invoice data) {
-    return Response.ok(invoicePdfGenerator.generatePdf(new InvoiceData(data,
+  public Response createPdfFromInvoice(@NotNull Invoice invoice) {
+    return Response.ok(invoicePdfGenerator.generatePdf(new InvoiceData(invoice,
         translationCache.getTranslationMap().get("FR")
-      ))).build(); }
+      ))).build();
+  }
 
 }

@@ -1,9 +1,10 @@
 package com.fvd.pdf.dev.resources;
 
-import com.fvd.pdf.Templates;
-import com.fvd.pdf.data.InvoiceData;
+import com.fvd.pdf.invoice.InvoiceData;
 import com.fvd.pdf.dev.utils.InvoiceGenerator;
-import com.fvd.pdf.generator.InvoicePdfGenerator;
+import com.fvd.pdf.invoice.InvoicePdfGenerator;
+import com.fvd.pdf.invoice.InvoiceResourceImpl;
+import com.fvd.pdf.invoice.InvoiceTemplates;
 import com.fvd.pdf.modelsopenapi.beans.Invoice;
 import com.fvd.pdf.translations.TranslationCache;
 import io.quarkus.arc.profile.IfBuildProfile;
@@ -38,7 +39,7 @@ public class DevResource implements InvoiceGenerator {
         generateInvoiceItem("Product C", 3, 12.50)
       )
     );
-    return Templates.invoice(new InvoiceData(invoice, translationCache.getTranslationMap().get("FR"))).render();
+    return InvoiceTemplates.invoice(new InvoiceData(invoice, translationCache.getTranslationMap().get("FR"))).render();
   }
 
   @GET

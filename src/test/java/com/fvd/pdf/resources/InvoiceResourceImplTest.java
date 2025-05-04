@@ -14,7 +14,7 @@ import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 @RequiredArgsConstructor
-class PdfResourceImplTest extends InvoiceTester {
+class InvoiceResourceImplTest extends InvoiceTester {
 
   @Test
   @SneakyThrows

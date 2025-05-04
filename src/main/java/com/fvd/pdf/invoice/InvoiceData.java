@@ -1,4 +1,4 @@
-package com.fvd.pdf.data;
+package com.fvd.pdf.invoice;
 
 import com.fvd.pdf.modelsopenapi.beans.Invoice;
 import io.quarkus.qute.TemplateData;

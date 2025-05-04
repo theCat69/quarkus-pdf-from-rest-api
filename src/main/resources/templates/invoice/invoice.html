@@ -31,12 +31,13 @@ th {
       <td>{invoiceItem.description}</td>
       <td>{invoiceItem.quantity}</td>
       <td>{invoiceItem.unitPrice}</td>
+      <td>{invoiceItem.amount}</td>
     </tr>
   {/for}
   </tbody>
   <tfoot>
   <tr>
-    <td colspan="3" class="total">Total:</td>
+    <td colspan="3" class="total">{data.translations.get('total') ?: 'Total'}: {data.invoice.total}</td>
   </tr>
   </tfoot>
 </table>

@@ -1,7 +1,8 @@
 package com.fvd.pdf.generator;
 
 import com.fvd.pdf.InvoiceTester;
-import com.fvd.pdf.data.InvoiceData;
+import com.fvd.pdf.invoice.InvoiceData;
+import com.fvd.pdf.invoice.InvoicePdfGenerator;
 import com.fvd.pdf.modelsopenapi.beans.Invoice;
 import com.fvd.pdf.translations.TranslationCache;
 import io.quarkus.test.junit.QuarkusTest;
