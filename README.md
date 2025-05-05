@@ -69,5 +69,17 @@ Easily start your REST Web Services
 ## Testing in native mode locally :
 
 ```shell 
-mvnw verify -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -Dquarkus.container-image.name=pdf-with-quarkus -Dquarkus.docker.dockerfile-native-path=src/main/docker/Dockerfile.native-micro -Dquarkus.test.native-image-profile=test-Dquarkus.native.builder-image=quay.io/quarkus/ubi-quarkus-mandrel-builder-image:jdk-21.0.5
+mvnw verify -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -Dquarkus.container-image.name=pdf-with-quarkus -Dquarkus.docker.dockerfile-native-path=src/main/docker/Dockerfile.native-micro
+```
+
+## Rebuild docker image from test executable
+
+```shell 
+docker build -f C:\dev\project\pdf-with-quarkus\src\main\docker\Dockerfile.native-micro -t fef/pdf-with-quarkus:1.0.0-SNAPSHOT C:\dev\project\pdf-with-quarkus
+```
+
+## Run docker image from test native executable
+
+```shell 
+docker run --name quarkus-integration-test-pomDm -i --rm -p 8081:8081 -p 8444:8444 --env QUARKUS_LOG_CATEGORY__IO_QUARKUS__LEVEL=INFO --env QUARKUS_HTTP_PORT=8081 --env QUARKUS_HTTP_SSL_PORT=8444 --env TEST_URL=http://localhost:8081 --env QUARKUS_PROFILE=prod --env QUARKUS_DOCKER_DOCKERFILE_NATIVE_PATH=src/main/docker/Dockerfile.native-micro --env QUARKUS_CONTAINER_IMAGE_NAME=pdf-with-quarkus --env QUARKUS_CONTAINER_IMAGE_BUILD=true --env QUARKUS_NATIVE_CONTAINER_BUILD=true fef/pdf-with-quarkus:1.0.0-SNAPSHOT
 ```
