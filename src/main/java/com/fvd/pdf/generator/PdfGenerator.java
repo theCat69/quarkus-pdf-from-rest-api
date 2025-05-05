@@ -10,7 +10,8 @@ public interface PdfGenerator<T> {
   Function<T, TemplateInstance> getTemplate();
 
   default byte[] generatePdf(T data) {
-    try {
+//&(Document document = new Document(); ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream())
+    try  {
       // Load the HTML template
       TemplateInstance templateInstance = getTemplate().apply(data);
 
@@ -23,7 +24,7 @@ public interface PdfGenerator<T> {
       renderer.setDocumentFromString(processedHtml);
       renderer.layout();
 
-      // handle multipage case
+//       handle multipage case
       int pageNumber = renderer.getRootBox().getLayer().getPages().size();
       if(pageNumber > 1) {
         return handleMultiPage(pageNumber, data, renderer, outputStream);

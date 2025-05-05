@@ -65,3 +65,9 @@ If you want to learn more about building native executables, please consult <htt
 Easily start your REST Web Services
 
 [Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+
+## Testing in native mode locally :
+
+```shell 
+mvnw verify -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -Dquarkus.container-image.name=pdf-with-quarkus -Dquarkus.docker.dockerfile-native-path=src/main/docker/Dockerfile.native-micro -Dquarkus.test.native-image-profile=test-Dquarkus.native.builder-image=quay.io/quarkus/ubi-quarkus-mandrel-builder-image:jdk-21.0.5
+```

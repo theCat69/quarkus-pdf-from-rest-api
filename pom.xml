@@ -36,9 +36,9 @@
       <artifactId>quarkus-rest</artifactId>
     </dependency>
     <dependency>
-    <groupId>io.quarkus</groupId>
-    <artifactId>quarkus-rest-jackson</artifactId>
-  </dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-rest-jackson</artifactId>
+    </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-qute</artifactId>
@@ -47,6 +47,13 @@
       <groupId>io.quarkiverse.openpdf</groupId>
       <artifactId>quarkus-openpdf</artifactId>
       <version>3.1.2</version>
+    </dependency>
+    <!-- needed to make openpdf work in native
+    we could also ignore those class please read : https://github.com/quarkusio/quarkus/issues/36026
+    -->
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-awt</artifactId>
     </dependency>
     <dependency>
       <groupId>org.xhtmlrenderer</groupId>
@@ -71,6 +78,10 @@
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-smallrye-openapi</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-container-image-docker</artifactId>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
@@ -105,7 +116,7 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>${compiler-plugin.version}</version>
         <configuration>
-        <parameters>true</parameters>
+          <parameters>true</parameters>
           <annotationProcessorPaths>
             <path>
               <groupId>org.projectlombok</groupId>
@@ -158,6 +169,9 @@
       <properties>
         <skipITs>false</skipITs>
         <quarkus.native.enabled>true</quarkus.native.enabled>
+                <quarkus.native.additional-build-args>--initialize-at-build-time=java.awt.BasicStroke\,java.awt.geom.AffineTransform</quarkus.native.additional-build-args>
+<!--        <quarkus.native.additional-build-args>&#45;&#45;initialize-at-run-time=org.xhtmlrenderer.pdf.ITextOutputDevice,&#45;&#45;verbose-->
+<!--        </quarkus.native.additional-build-args>-->
       </properties>
     </profile>
   </profiles>

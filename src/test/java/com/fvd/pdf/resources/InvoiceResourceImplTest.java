@@ -1,9 +1,7 @@
 package com.fvd.pdf.resources;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fvd.pdf.InvoiceTester;
 import io.quarkus.test.junit.QuarkusTest;
-import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +11,6 @@ import java.util.Arrays;
 import static io.restassured.RestAssured.given;
 
 @QuarkusTest
-@RequiredArgsConstructor
 class InvoiceResourceImplTest extends InvoiceTester {
 
   @Test
@@ -33,7 +30,7 @@ class InvoiceResourceImplTest extends InvoiceTester {
           )
         )
       )
-      .when().post("/pdf/invoice")
+      .when().post("/invoice/pdf")
       .then()
       .statusCode(200);
   }

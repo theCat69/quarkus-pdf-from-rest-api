@@ -17,6 +17,7 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.Arrays;
 
+//TODO assert pdf content
 @QuarkusTest
 @RequiredArgsConstructor
 class InvoicePdfGeneratorTest extends InvoiceTester {
