@@ -13,9 +13,16 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.TrueFileFilter;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Base64;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Path("/dev")
 @ApplicationScoped
@@ -32,6 +39,10 @@ public class DevResource implements InvoiceGenerator {
       Arrays.asList(
         generateInvoiceItem("Product A", 2, 25.99),
         generateInvoiceItem("Product B", 1, 59.99),
+        generateInvoiceItem("Product C", 3, 12.50),
+        generateInvoiceItem("Product C", 3, 12.50),
+        generateInvoiceItem("Product C", 3, 12.50),
+        generateInvoiceItem("Product C", 3, 12.50),
         generateInvoiceItem("Product C", 3, 12.50)
       )
     );
@@ -51,5 +62,24 @@ public class DevResource implements InvoiceGenerator {
   public byte[] invoicePdf() {
     Invoice invoice = exampleInvoice();
     return invoicePdfGenerator.generatePdf(new InvoiceData(invoice, translationCache.getTranslationMap().get("FR")));
+  }
+
+  @GET
+  @Path("/images/base64")
+  @Produces(MediaType.APPLICATION_JSON)
+  public Map<String, String> getImageFileAsBase64() {
+    return FileUtils.listFiles(java.nio.file.Path.of("src/main/resources/base-images").toFile(), TrueFileFilter.INSTANCE,
+        TrueFileFilter.INSTANCE)
+      .stream()
+      .collect(Collectors.toMap(
+        File::getName,
+        file -> {
+          try {
+            return Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(file));
+          } catch (IOException e) {
+            throw new RuntimeException(e);
+          }
+        }
+      ));
   }
 }

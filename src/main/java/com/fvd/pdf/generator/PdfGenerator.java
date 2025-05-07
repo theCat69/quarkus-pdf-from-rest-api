@@ -1,5 +1,6 @@
 package com.fvd.pdf.generator;
 
+import com.fvd.pdf.models.PageablePdfData;
 import io.quarkus.qute.TemplateInstance;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
@@ -7,11 +8,12 @@ import java.io.ByteArrayOutputStream;
 import java.util.function.Function;
 
 public interface PdfGenerator<T> {
+
   Function<T, TemplateInstance> getTemplate();
 
   default byte[] generatePdf(T data) {
 //&(Document document = new Document(); ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream())
-    try  {
+    try {
       // Load the HTML template
       TemplateInstance templateInstance = getTemplate().apply(data);
 
@@ -26,7 +28,7 @@ public interface PdfGenerator<T> {
 
 //       handle multipage case
       int pageNumber = renderer.getRootBox().getLayer().getPages().size();
-      if(pageNumber > 1) {
+      if (pageNumber > 1) {
         return handleMultiPage(pageNumber, data, renderer, outputStream);
       }
 

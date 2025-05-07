@@ -4,47 +4,59 @@
 th {
   background-color: green;
 }
+.gca-logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 {/style}
-<div class="header">
-  <h1 style="color: blue">{data.translations.get('invoice.title').toUpperCase ?: 'INVOICE'}</h1>
-  <h2>{data.translations.get('invoice.title') ?: 'Invoice'}: {data.invoice.invoiceNumber}</h2>
-</div>
+{#for pageData in data.getPdfPageData}
+<div class="page-container">
+  {#include gca-logo /}
+  <div class="header">
+    <h1 style="color: blue">{data.translations.get('invoice.title').toUpperCase ?: 'INVOICE'}</h1>
+    <h2>{data.translations.get('invoice.title') ?: 'Invoice'}: {data.invoice.invoiceNumber}</h2>
+  </div>
 
-<div class="invoice-details">
-  <p><strong>{data.translations.get('date') ?: 'Date'}:</strong> {data.invoice.date}</p>
-  <p><strong>{str:capitalize(data.translations.get('name')) ?: 'Name'}:</strong> {data.invoice.customerName}</p>
-  <p><strong>{data.translations.get('address') ?: 'Address'}</strong> {data.invoice.customerAddress}</p>
-</div>
+  <div class="invoice-details">
+    <p><strong>{data.translations.get('date') ?: 'Date'}:</strong> {data.invoice.date}</p>
+    <p><strong>{str:capitalize(data.translations.get('name')) ?: 'Name'}:</strong> {data.invoice.customerName}</p>
+    <p><strong>{data.translations.get('address') ?: 'Address'}</strong> {data.invoice.customerAddress}</p>
+  </div>
 
-<table>
-  <thead>
-  <tr>
-    <th>{data.translations.get('item') ?: 'Item'}</th>
-    <th>{data.translations.get('quantity') ?: 'Quantity'}</th>
-    <th>{data.translations.get('unitprice') ?: 'Unit price'}</th>
-    <th>{data.translations.get('amount') ?: 'Amount'}</th>
-  </tr>
-  </thead>
-  <tbody>
-  {#for invoiceItem in data.invoice.invoiceItems}
+  <table>
+    <thead>
+    <tr>
+      <th>{data.translations.get('item') ?: 'Item'}</th>
+      <th>{data.translations.get('quantity') ?: 'Quantity'}</th>
+      <th>{data.translations.get('unitprice') ?: 'Unit price'}</th>
+      <th>{data.translations.get('amount') ?: 'Amount'}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {#for invoiceItem in pageData.invoiceItems}
     <tr>
       <td>{invoiceItem.description}</td>
       <td>{invoiceItem.quantity}</td>
       <td>{invoiceItem.unitPrice}</td>
       <td>{invoiceItem.amount}</td>
     </tr>
-  {/for}
-  </tbody>
-  <tfoot>
-  <tr>
-    <td colspan="3" class="total">{data.translations.get('total') ?: 'Total'}: {data.invoice.total}</td>
-  </tr>
-  </tfoot>
-</table>
+    {/for}
+    </tbody>
+    <tfoot>
+    <tr>
+      <td colspan="3" class="total">{data.translations.get('total') ?: 'Total'}: {data.invoice.total}</td>
+    </tr>
+    </tfoot>
+  </table>
 
-{#include invoice/invoice_details}{/include}
+  <div>
+    <p>{data.translations.get('invoice.footer') ?: 'Thank you for your business!'}</p>
+  </div>
 
-<div>
-  <p>{data.translations.get('invoice.footer') ?: 'Thank you for your business!'}</p>
+  {#if pageData_hasNext}
+  <div class="page-break"></div>
+  {/if}
 </div>
+{/for}
 {/include}
